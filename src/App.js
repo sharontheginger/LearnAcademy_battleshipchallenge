@@ -11,9 +11,9 @@ class App extends Component {
       <Router>
           <div>
           <Jumbotron />
-          <h4 className='instructions'>
-              Play Battleship! Click squares to launch torpedoes and try to hit each of five battleships. <br /> <br/>
-              If you don't find all five battleships in 50 tries, the game is over. Good luck!
+          <h4>
+              Play Battleship! Click squares to launch torpedoes and try to hit each of five battleships.
+              If you do not find all five battleships in 50 tries, the game is over. Good luck!
           </h4>
           <Route path = "/" component={Board}/>
           </div>
