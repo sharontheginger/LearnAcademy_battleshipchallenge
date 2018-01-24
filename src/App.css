@@ -1,28 +1,53 @@
-.App {
-  text-align: center;
+table, th, td {
+    border: 1px solid black;
+
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+table {
+    width: 500px;
+    height: 500px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.hit {
+    background-image: url('./images/ship.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-.App-title {
-  font-size: 1.5em;
+.miss {
+    background-image: url('./images/x.png');
+    background-position: center;
+    background-size: cover;
 }
 
-.App-intro {
-  font-size: large;
+.empty {
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.ship {
+
+}
+
+.Jumbo {
+    background-color: #114B85;
+    padding-top: 50px;
+    padding: 0px, 0px, 0px, 0px;
+    margin-top: 0px;
+}
+
+h1, .instructions {
+    color: black;
+    float: center;
+
+}
+
+.Battleship {
+    max-height: 300px;
+    max-width: 300px;
+    
+
+
+}
+body {
+    background-color: #FDF4AF;
 }
