@@ -42,21 +42,27 @@ export default class Board extends Component {
     }
 
     placeShip() {
-        const { board } = this.state
+        // find random cell
         var row = Math.floor(Math.random()*10);
         var col = Math.floor(Math.random()*10);
         // var maxCol = 10 - SHIPSIZE[ship];
         // var col = Math.floor(Math.random()*maxCol);
         // var row = ship;
 
-        for (var shipSquare = 0;
-            shipSquare < SHIPSIZE[4]; shipSquare ++)
-            { this.state.board [col+shipSquare][row] = 1;
+        // console.log(this.state.board[row][col])
 
-                if (board[row][col] === EMPTY){
-                    this.setState({differentShips: this.state.differentShips + 1})
-                    board[row][col] = SHIP
+        // add cells for each multicell ship
+        for (var i = 0; i < 3; i++){
+            //if the random cell is empty, put a ship there
+                if (this.state.board[row][col+i] === EMPTY){
+                    // TODO use setState function instead of directly altering state
+                    // TODO make sure that the ship can't go over the side of the board
+                    this.state.board[row][col+i] = SHIP;
+                    // console.log(this.state.board[row][col+shipSquare])
+                    console.log(row + "_" + col)
                 } else {
+                    // if the cell was not empty, try again
+                    // TODO need to find a way to control this -- is currently running too many times
                     this.placeShip()
                 }
             }
