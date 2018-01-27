@@ -14,7 +14,7 @@ export default class Board extends Component {
         super(props)
 
         this.state = {
-            torpedoTotalCount: 9,
+            torpedoTotalCount: 50,
             torpedoesFired: 0,
             torpedoesHit: 0,
             differentShips: 0,
