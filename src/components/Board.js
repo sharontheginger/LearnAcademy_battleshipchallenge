@@ -7,11 +7,9 @@ const EMPTY = 0
 const SHIP = 1
 const HIT = 2
 const MISS = 3
-const SHIPSIZE = [5,4,3,2,1];
-
+const SHIPSIZE = [5,4,3,2,1]
 
 export default class Board extends Component {
-
     constructor(props) {
         super(props)
 
@@ -26,8 +24,28 @@ export default class Board extends Component {
     }
 
     componentWillMount() {
-        for (let i = 0; i < 5; i++) {
-            this.placeShip(3)
+        console.log("::: CALLED componentWillMount :::");
+
+        this.placeShips()
+    }
+
+    notCalled() {
+        console.log("::: HEY! I'M BEING CALLED! :::");
+    }
+
+    placeShips() {
+        console.log("::: CALLED placeShips :::");
+
+        for (let i = 0; i < SHIPSIZE.length; i++) {
+            console.log("Placing ship size:" + SHIPSIZE[i])
+
+            var num = Math.floor(Math.random() * 2)
+
+            if (num === 1) {
+                this.placeShipHor(SHIPSIZE[i])
+            } else {
+                this.placeShipVer(SHIPSIZE[i])
+            }
         }
     }
 
@@ -44,7 +62,7 @@ export default class Board extends Component {
         return board
     }
 
-    placeShip(size) {
+    placeShipHor(size) {
         const copyOfBoard = this.state.board
 
         // find random cell
@@ -52,12 +70,12 @@ export default class Board extends Component {
         var col = Math.floor(Math.random()*10)
 
         // check if we can place the ship -- if true then place the ship
-        if(this.isEmpty(copyOfBoard, row, col, size) === true) {
+        if(this.isEmptyHor(copyOfBoard, row, col, size) === true) {
             for(let i = 0; i < size; i++) {
                 copyOfBoard[row][col+i] = SHIP
             }
         } else {
-            this.placeShip(size)
+            this.placeShipHor(size)
         }
 
         this.setState({
@@ -65,11 +83,45 @@ export default class Board extends Component {
         })
     }
 
-    isEmpty(board, row, col, size) {
-        for(let i = 0; i < size; i++) {
-            // console.log("row:", row, "column:", col, "ship space:", i, " = ", col+i)
+    placeShipVer(size) {
+        const copyOfBoard = this.state.board
 
-            if (board[row][col+i] === SHIP || board[row][col+i] === undefined) {
+        // find random cell
+        var row = Math.floor(Math.random()*10)
+        var col = Math.floor(Math.random()*10)
+
+        // check if we can place the ship -- if true then place the ship
+        if(this.isEmptyVer(copyOfBoard, row, col, size) === true) {
+            for(let i = 0; i < size; i++) {
+                copyOfBoard[row+i][col] = SHIP
+            }
+        } else {
+            this.placeShipVer(size)
+        }
+
+        this.setState({
+            board: copyOfBoard
+        })
+    }
+
+    isEmptyHor(board, row, col, size) {
+        for(let i = 0; i < size; i++) {
+            // console.log("HORIZONTAL:: row:", row, "column:", col+i, "ship space:", i )
+            // check that board cell has valid coordinates (row & col of 0-9)
+            // only need to check the value that is changing, because the random number
+            // generator only provides values 0-9
+            if ( board[row][col+i] === undefined  || board[row][col+i] === SHIP ) {
+                return false
+            }
+        }
+
+        return true
+    }
+
+    isEmptyVer(board, row, col, size) {
+        for(let i = 0; i < size; i++) {
+            // console.log("VERTICAL:: row:", row+i, "column:", col, "ship space:", i )
+            if (board[row+i] === undefined || board[row+i][col] === SHIP ) {
                 return false
             }
         }
@@ -80,9 +132,7 @@ export default class Board extends Component {
     handleClick(row, col) {
         const { board } = this.state
 
-        if (this.state.torpedoesFired >= 9){
-            alert("Game Over!")
-        } else if (board[row][col] === SHIP) {
+        if (board[row][col] === SHIP) {
             this.setState({
                 board: board,
                 torpedoesHit: this.state.torpedoesHit + 1,
@@ -142,7 +192,9 @@ export default class Board extends Component {
 
     render() {
         console.log(this.state.board)
-
+        if(this.state.torpedoTotalCount === 0){
+            alert("Game Over!")
+        }
         return(
             <div>
                 <table className="Gameboard">
@@ -159,4 +211,3 @@ export default class Board extends Component {
         )
     }
 }
-
